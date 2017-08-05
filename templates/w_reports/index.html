@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+{% block content%}
+<div class="center">
+    <h3>Create Climate Data and View Using Charts</h3>
+
+<h5> User will be able to store weather data in database.</h5>
+<h5> User will be able to view data in form of Charts.</h5>
+<h5> Allow to download and store data country wise.</h5>
+<h5> Allow to download and store data on weather type i.e max temprature, rainfall etc.</h5>
+<h5> User will be able to view weather data for particular country.</h5>
+<h5> User can filter data base on country, year and weather type.</h5>
+<h5> Data will be updated if record already found in database.</h5>
+<br>
+<br>
+</div>
+    <div class="center">
+    <a href="create-data"><button type="button" class="btn btn-primary btn-lg">Create Weather Report</button></a>
+    <a href="view-stats"><button type="button" class="btn btn-primary btn-lg">View Weather Report</button></a>
+</div>
+{% endblock %}
+</body>
+</html>

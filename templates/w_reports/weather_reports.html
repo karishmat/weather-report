@@ -1,0 +1,401 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extrajs %}
+    <script>
+        $('.btn-cdata').click(function () {
+            var country = $(this).data('country');
+            var data_url = $(this).data('url');
+            var data_type = $(this).data('type');
+            var create_data_url = '{{ create_data_url }}';
+            $('.loader').show();
+            $.ajax({
+                type: "POST",
+                url: window.location.protocol + '//' + create_data_url,
+                data: {
+                    country: country,
+                    data_url: data_url,
+                    data_type: data_type,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    var confirm_text = "Data Created For " + data_type + " " + country;
+                    $('.loader').hide(); // hide the loading message
+                    $('.confirm_msg').text(confirm_text);
+                    $('.confirm_dialog').show();
+
+                }
+
+            });
+        });
+        $('.confirm_dialog .confirm_popup_box .btn_confirm_close').click(function () {
+            $('.confirm_dialog').hide();
+        });
+        $(".dropdown-menu li a").click(function () {
+            $(this).closest('div.dropdown').find('button.dropdown-toggle').html($(this).text() + ' <span class="caret"></span>');
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    <h4>View Report</h4>
+    <form action="/view-stats" method="POST">
+        {% csrf_token %}
+        {{ DataForm }}
+        <input type="submit" class="btn" value="Get Data" name="mybtn">
+    </form>
+
+    {% if error_desc %}
+        <div class="error">{{ error_desc }}</div>{% endif %}
+
+    <br>
+    <br>
+    <h4>Create Weather Reports For Different Countries</h4>
+    <br>
+    <table class="table">
+        <tr>
+            <th>Region</th>
+            <th>Max-Temp</th>
+            <th>Min-Temp</th>
+            <th>Mean-Temp</th>
+            <th>Sunshine</th>
+            <th>Rainfall</th>
+            <th>Raindays1mm</th>
+            <th>AirFrost</th>
+        </tr>
+        <tr>
+            <td>UK</td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="UK" data-type="Max-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/UK.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="UK" data-type="Min-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/UK.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="UK" data-type="Mean-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/UK.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="UK" data-type="Sunshine"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Sunshine/date/UK.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="UK" data-type="Rainfall"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Rainfall/date/UK.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="UK" data-type="Raindays1mm"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Raindays1mm/date/UK.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="UK" data-type="AirFrost"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/AirFrost/date/UK.txt"
+                       value="Create"></td>
+        </tr>
+
+        <tr>
+            <td>England</td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England" data-type="Max-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/England.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England" data-type="Min-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/England.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England" data-type="Mean-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/England.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England" data-type="Sunshine"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Sunshine/date/England.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England" data-type="Rainfall"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Rainfall/date/England.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England" data-type="Raindays1mm"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Raindays1mm/date/England.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England" data-type="AirFrost"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/AirFrost/date/England.txt"
+                       value="Create"></td>
+        </tr>
+
+        <tr>
+            <td>Wales</td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Wales" data-type="Max-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/Wales.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Wales" data-type="Min-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/Wales.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Wales" data-type="Mean-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/Wales.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Wales" data-type="Sunshine"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Sunshine/date/Wales.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Wales" data-type="Rainfall"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Rainfall/date/Wales.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Wales" data-type="Raindays1mm"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Raindays1mm/date/Wales.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Wales" data-type="AirFrost"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/AirFrost/date/Wales.txt"
+                       value="Create"></td>
+        </tr>
+
+        <tr>
+            <td>Scotland N</td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland N" data-type="Max-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/Scotland_N.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland N" data-type="Min-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/Scotland_N.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland N" data-type="Mean-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/Scotland_N.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland N" data-type="Sunshine"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Sunshine/date/Scotland_N.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland N" data-type="Rainfall"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Rainfall/date/Scotland_N.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland N" data-type="Raindays1mm"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Raindays1mm/date/Scotland_N.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland N" data-type="AirFrost"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/AirFrost/date/Scotland_N.txt"
+                       value="Create"></td>
+        </tr>
+
+        <tr>
+            <td>Scotland</td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland" data-type="Max-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/Scotland.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland" data-type="Min-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/Scotland.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland" data-type="Mean-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/Scotland.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland" data-type="Sunshine"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Sunshine/date/Scotland.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland" data-type="Rainfall"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Rainfall/date/Scotland.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland" data-type="Raindays1mm"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Raindays1mm/date/Scotland.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland" data-type="AirFrost"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/AirFrost/date/Scotland.txt"
+                       value="Create"></td>
+        </tr>
+
+        <tr>
+            <td>Northern_Ireland</td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Northern_Ireland"
+                       data-type="Max-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/Northern_Ireland.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Northern_Ireland"
+                       data-type="Min-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/Northern_Ireland.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Northern_Ireland"
+                       data-type="Mean-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/Northern_Ireland.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Northern_Ireland"
+                       data-type="Sunshine"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Sunshine/date/Northern_Ireland.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Northern_Ireland"
+                       data-type="Rainfall"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Rainfall/date/Northern_Ireland.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Northern_Ireland"
+                       data-type="Raindays1mm"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Raindays1mm/date/Northern_Ireland.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Northern_Ireland"
+                       data-type="AirFrost"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/AirFrost/date/Northern_Ireland.txt"
+                       value="Create"></td>
+        </tr>
+
+        <tr>
+            <td>England & Wales</td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England & Wales"
+                       data-type="Max-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/England_and_Wales.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England & Wales"
+                       data-type="Min-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/England_and_Wales.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England & Wales"
+                       data-type="Mean-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/England_and_Wales.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England & Wales"
+                       data-type="Sunshine"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Sunshine/date/England_and_Wales.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England & Wales"
+                       data-type="Rainfall"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Rainfall/date/England_and_Wales.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England & Wales"
+                       data-type="Raindays1mm"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Raindays1mm/date/England_and_Wales.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England & Wales"
+                       data-type="AirFrost"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/AirFrost/date/England_and_Wales.txt"
+                       value="Create"></td>
+        </tr>
+
+        <tr>
+            <td>England N</td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England N" data-type="Max-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/England_N.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England N" data-type="Min-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/England_N.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England N" data-type="Mean-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/England_N.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England N" data-type="Sunshine"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Sunshine/date/England_N.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England N" data-type="Rainfall"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Rainfall/date/England_N.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England N" data-type="Raindays1mm"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Raindays1mm/date/England_N.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England N" data-type="AirFrost"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/AirFrost/date/England_N.txt"
+                       value="Create"></td>
+        </tr>
+
+        <tr>
+            <td>England S</td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England S" data-type="Max-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/England_S.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England S" data-type="Min-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/England_S.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England S" data-type="Mean-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/England_S.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England S" data-type="Sunshine"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Sunshine/date/England_S.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England S" data-type="Rainfall"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Rainfall/date/England_S.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England S" data-type="Raindays1mm"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Raindays1mm/date/England_S.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England S" data-type="AirFrost"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/AirFrost/date/England_S.txt"
+                       value="Create"></td>
+        </tr>
+        <tr>
+            <td>Scotland E</td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland E" data-type="Max-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/Scotland_E.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland E" data-type="Min-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/Scotland_E.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland E" data-type="Mean-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/Scotland_E.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland E" data-type="Sunshine"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Sunshine/date/Scotland_E.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland E" data-type="Rainfall"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Rainfall/date/Scotland_E.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland E" data-type="Raindays1mm"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Raindays1mm/date/Scotland_E.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland E" data-type="AirFrost"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/AirFrost/date/Scotland_E.txt"
+                       value="Create"></td>
+        </tr>
+        <tr>
+            <td>Scotland W</td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland W" data-type="Max-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/Scotland_W.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland W" data-type="Min-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/Scotland_W.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland W" data-type="Mean-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/Scotland_W.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland W" data-type="Sunshine"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Sunshine/date/Scotland_W.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland W" data-type="Rainfall"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Rainfall/date/Scotland_W.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland W" data-type="Raindays1mm"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Raindays1mm/date/Scotland_W.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="Scotland W" data-type="AirFrost"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/AirFrost/date/Scotland_W.txt"
+                       value="Create"></td>
+        </tr>
+        <tr>
+            <td>England E & NE</td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England E & NE"
+                       data-type="Max-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/England_E_and_NE.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England E & NE"
+                       data-type="Min-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/England_E_and_NE.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England E & NE"
+                       data-type="Mean-Temp"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/England_E_and_NE.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England E & NE"
+                       data-type="Sunshine"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Sunshine/date/England_E_and_NE.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England E & NE"
+                       data-type="Rainfall"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Rainfall/date/England_E_and_NE.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England E & NE"
+                       data-type="Raindays1mm"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Raindays1mm/date/England_E_and_NE.txt"
+                       value="Create"></td>
+            <td><input type="button" class="btn btn-cdata btn-primary" data-country="England E & NE"
+                       data-type="AirFrost"
+                       data-url="http://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/AirFrost/date/England_E_and_NE.txt"
+                       value="Create"></td>
+        </tr>
+    </table>
+
+    <div class="loader" style='display:none'>
+    </div>
+    <!-- common error box-->
+
+    <div class="confirm_dialog" hidden>
+        <div class="confirm_popup_box">
+            <p class="confirm_title"><span class="ti-alert"></span></p>
+
+            <p class="confirm_msg">Data Created For </p>
+            <a class="btn btn_confirm_close">OK</a>
+        </div>
+    </div>
+
+{% endblock %}
+
+
