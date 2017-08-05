@@ -11,4 +11,4 @@
 8. View created data in form of charts
 
 
-![Alt text](https://user-images.githubusercontent.com/12063016/28998066-14a2332c-7a40-11e7-9999-673d7fd48f2e.png)
+![Screenshot](https://user-images.githubusercontent.com/12063016/28998066-14a2332c-7a40-11e7-9999-673d7fd48f2e.png)
