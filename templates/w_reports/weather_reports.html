@@ -38,20 +38,23 @@
 {% endblock %}
 
 {% block content %}
+    <div class="center">
+        <h4>View Report</h4>
 
-    <h4>View Report</h4>
-    <form action="/view-stats" method="POST">
-        {% csrf_token %}
-        {{ DataForm }}
-        <input type="submit" class="btn" value="Get Data" name="mybtn">
-    </form>
+        <form action="/view-stats" method="POST">
+            {% csrf_token %}
+            {{ DataForm }}
+            <input type="submit" class="btn" value="Get Data" name="mybtn">
+        </form>
 
-    {% if error_desc %}
-        <div class="error">{{ error_desc }}</div>{% endif %}
+        {% if error_desc %}
+            <div class="error">{{ error_desc }}</div>{% endif %}
 
-    <br>
-    <br>
-    <h4>Create Weather Reports For Different Countries</h4>
+        <br>
+        <br>
+        <h4>Create Weather Reports For Different Countries</h4>
+    </div>
+
     <br>
     <table class="table">
         <tr>

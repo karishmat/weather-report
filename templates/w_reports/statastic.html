@@ -2,17 +2,21 @@
 {% load static %}
 
 {% block content %}
+    <div class="center">
+        <h3>Get Weather Report By Country</h3>
 
-    <h3>Get Weather Report By Country</h3>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ DataForm }}
-        <input type="submit" class="btn" value="Get Data" name="mybtn">
-    </form>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ DataForm }}
+            <input type="submit" class="btn" value="Get Data" name="mybtn">
+        </form>
+        <a href="/create-data"><input type="button" class="btn btn-primary" value="Create Data"></a>
+    </div>
+    <br>
+    <br>
     {% if error_desc %}
         <div class="error">{{ error_desc }}</div>{% endif %}
     {% if output %}
-        <div id="chart-1">{{ output|safe }}</div>
+        <div id="chart-1" class="center">{{ output|safe }}</div>
     {% endif %}
-    <a href="/create-data"><input type="button" class="btn btn-primary" value="Create Data"></a>
 {% endblock %}
