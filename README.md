@@ -22,6 +22,6 @@ STEPS TO START PROJECT
 8. View created data in form of charts
 
 
-![Screenshot](https://user-images.githubusercontent.com/12063016/29000883-79653b4a-7a97-11e7-9daf-bda43ef771bc.png)
+![Screenshot](https://user-images.githubusercontent.com/12063016/29000920-97d29dec-7a98-11e7-8f97-16b901c51710.png)
 
 ![Screenshot](https://user-images.githubusercontent.com/12063016/29000906-05dd3bc2-7a98-11e7-8ce8-b78695f60fc7.png)
