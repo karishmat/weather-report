@@ -1,5 +1,5 @@
 # weather-report
-Scrap data from website and store it in database. View and filter stored data in form on charts.
+Extract weather details from text file and store it in database. View and filter stored data in form on charts.
 
 Requirements
 
